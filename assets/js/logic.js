@@ -1,7 +1,7 @@
 // Create a code quiz that contains the following requirements:
 
 // * A start button that when clicked a timer starts and the first question appears.
-// How to navigate to the first question and start timer when button is clicked?
+// How to start timer when button is clicked?
 
 // Grab button
 let startBtn = document.querySelector("#start");
@@ -29,6 +29,14 @@ function startQuiz() {
 }
 
 startQuiz();
+
+// How to navigate to the first question at the same time the button is clicked?
+// It should transition to the question when the button is clicked and the timer starts to count down
+
+
+// The questions should be stored in an array with the answer options 
+
+// The data from the array should display to the webpage.
 
 
 
