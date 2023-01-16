@@ -19,6 +19,7 @@ let choiceD = document.querySelector("#d");
 
 
 let timer = 75;
+let score = 0;
 
 // When the start button is clicked, it must hide the starting content and display the questions on screen
 function startQuiz() {
@@ -61,7 +62,7 @@ function renderQ() {
 
 
 function checkAnswer(answer) {
-  if (questions[runningQuestion].correct == answer) {
+  if (questions[runningQuestion].correct === answer) {
     answerCorrect();
   } else {
     answerWrong();
@@ -72,17 +73,19 @@ function checkAnswer(answer) {
   }
 }
 
-checkAnswer();
+
 
 function answerCorrect() {
-  let correctSfx = new Audio("../sfx/correct.wav");
+  let correctSfx = new Audio("assets/sfx/correct.wav");
   correctSfx.play();
+  score += 50
 }
 
 function answerWrong() {
-  let incorrectSfx = new Audio("../sfx/incorrect.wav");
+  let incorrectSfx = new Audio("assets/sfx/incorrect.wav");
   incorrectSfx.play();
   timer -= 10;
+  score -= 25;
 }
 
 function finalScore() {
