@@ -1,3 +1,9 @@
+:root {
+  --hue-neutral: 200;
+  --hue-wrong: 0;
+  --hue-correct: 145;
+}
+
 body {
   font-family: Arial;
   font-size: 120%;
@@ -86,3 +92,19 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+body.correct {
+  background-color: var(--background-correct);
+}
+
+body.wrong {
+  background-color: var(--background-wrong);
+}
+
+.choice.correct {
+  background-color: var(--background-correct);
+}
+.choice.wrong {
+  background-color: var(--background-wrong);
+}
+
