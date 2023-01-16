@@ -17,7 +17,6 @@ let choiceB = document.querySelector("#b");
 let choiceC = document.querySelector("#c");
 let choiceD = document.querySelector("#d");
 
-
 let timer = 75;
 let score = 0;
 
@@ -60,6 +59,7 @@ function renderQ() {
   choiceD.innerHTML = q.d;
 }
 
+// From the objects in the array, if a user chooses a specific option, run a function to explicitly show them that they are right/wrong
 
 function checkAnswer(answer) {
   if (questions[runningQuestion].correct === answer) {
@@ -67,37 +67,42 @@ function checkAnswer(answer) {
   } else {
     answerWrong();
   }
-  if (runningQuestion < lastQuestionIndex) {
-    runningQuestion++;
-    renderQ();
-  }
+
+  //Input a delay between each question
+
+  setTimeout(function () {
+    if (runningQuestion < lastQuestionIndex) {
+      runningQuestion++;
+      renderQ();
+    }
+  }, 700);
 }
 
-
-
 function answerCorrect() {
+    document.body.style.backgroundColor = "green";
+    setTimeout(function () {
+      document.body.style.backgroundColor = '';
+    }, 700);
+
   let correctSfx = new Audio("assets/sfx/correct.wav");
   correctSfx.play();
-  score += 50
+  score += 50;
 }
 
 function answerWrong() {
+  document.body.style.backgroundColor = "red";
+  setTimeout(function () {
+    document.body.style.backgroundColor = '';
+  }, 700);
   let incorrectSfx = new Audio("assets/sfx/incorrect.wav");
   incorrectSfx.play();
   timer -= 10;
   score -= 25;
 }
 
-function finalScore() {
 
+//
 
-
-}
-
-// The questions should be stored in an array with the answer options
-
-// The data from the array should display to the webpage.
-// The answer option(s) must also appear under the question for the user to answer
 
 // How to display whether the chosen answer was correct or incorrect?
 
