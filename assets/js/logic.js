@@ -4,10 +4,7 @@
 // How to start timer when button is clicked?
 
 let startScreen = document.querySelector("#start-screen");
-
-// Grab button
 let startBtn = document.querySelector("#start");
-// Grab timer
 let timeContent = document.querySelector(".timer");
 let timeClock = document.querySelector("#time");
 let quizEl = document.querySelector("#questions");
@@ -16,6 +13,7 @@ let choiceA = document.querySelector("#a");
 let choiceB = document.querySelector("#b");
 let choiceC = document.querySelector("#c");
 let choiceD = document.querySelector("#d");
+let endScreen = document.querySelector("#end-screen");
 
 let timer = 75;
 let score = 0;
@@ -32,8 +30,9 @@ function startQuiz() {
       timer--;
       timeClock.textContent = timer;
 
-      if (timer === 0) {
+      if (timer <= 0) {
         clearInterval(timeInterval);
+        showEndScreen();
         return;
       }
     }, 1000);
@@ -42,9 +41,12 @@ function startQuiz() {
 
 startQuiz();
 
+
+
 // How to navigate to the first question at the same time the button is clicked?
 // It should transition to the question when the button is clicked and the timer starts to count down
 
+// Import the questions array and declare the question being dispayed on screen
 let lastQuestionIndex = questions.length - 1;
 let runningQuestion = 0;
 
@@ -69,40 +71,58 @@ function checkAnswer(answer) {
   }
 
   //Input a delay between each question
+  // Go through the questions array and if the value of the current question is less that the value of the length of the array, move to the next question
 
   setTimeout(function () {
     if (runningQuestion < lastQuestionIndex) {
       runningQuestion++;
       renderQ();
+    } else if (runningQuestion === lastQuestionIndex) {
+      showEndScreen();
+      return;
     }
   }, 700);
 }
 
+// Make a function that makes the screen green, plays the 'correct' audio and increment score if the user chooses the correct answer for a question
+
 function answerCorrect() {
-    document.body.style.backgroundColor = "green";
-    setTimeout(function () {
-      document.body.style.backgroundColor = '';
-    }, 700);
+  // When the correct answer is chosen, the background colour turns green for a set period of time and then returns to neutral colour.
+  document.body.style.backgroundColor = "green";
+  setTimeout(function () {
+    document.body.style.backgroundColor = "";
+  }, 700);
 
   let correctSfx = new Audio("assets/sfx/correct.wav");
   correctSfx.play();
+  correctSfx.volume = 0.2;
   score += 50;
 }
 
+// Make a function that makes the screen red, plays the 'incorrect' audio and increment score if the user chooses the incorrect answer for a question
+
 function answerWrong() {
+  // When the correct answer is chosen, the background colour turns red for a set period of time and then returns to neutral colour.
   document.body.style.backgroundColor = "red";
   setTimeout(function () {
-    document.body.style.backgroundColor = '';
+    document.body.style.backgroundColor = "";
   }, 700);
   let incorrectSfx = new Audio("assets/sfx/incorrect.wav");
   incorrectSfx.play();
+  incorrectSfx.volume = 0.2;
+  // Minus points and deduct 10 from timer.
   timer -= 10;
   score -= 25;
 }
 
+// When the user has completed the quiz or the timer runs out. Display an alert/prompt to ask user to input in their name
+// The score is to be displayed on screen and saved onto an array for the high-scores.
 
-//
-
+function showEndScreen() {
+  quizEl.style.display = "none";
+  endScreen.style.display = "block";
+  endScreen.classList.replace('hide', 'show');
+}
 
 // How to display whether the chosen answer was correct or incorrect?
 
