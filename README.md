@@ -1,6 +1,6 @@
 # code-quiz
 
-code-quiz is a project which mainly involves using JavaScript to create a functional Quiz application. This is the sixth module challenge assessment of the Front-End Web Development Bootcamp.   
+code-quiz is a project which mainly involves using JavaScript and working with Web APIs to create a functional Quiz application. This is the sixth module challenge assessment of the Front-End Web Development Bootcamp.   
 
 ## Installation 
 
