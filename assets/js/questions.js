@@ -41,20 +41,20 @@ const questions = [
         correct: "a"
     },
     {
-        question: "What are meta  in HTML?",
-        a: "Meta tags consist of character encoding, title, or description",
-        b: "Meta tags store the main content of the webpage",
-        c: "Meta tags are specific IDs that hold the link of the document",
-        d: "Meta tags show the user which window is running the code",
-        correct: "a"
+        question: "Which of the following methods can be used to display data in some form using Javascript?",
+        a: "document.write()",
+        b: "console.log()",
+        c: "window.alert()",
+        d: "document.data()",
+        correct: "b"
     },
     {
-        question: "What are meta tags in HTML?",
-        a: "Meta tags consist of character encoding, title, or description",
-        b: "Meta tags store the main content of the webpage",
-        c: "Meta tags are specific IDs that hold the link of the document",
-        d: "Meta tags show the user which window is running the code",
-        correct: "a"
+        question: "In JavaScript, what data type is 'null'?",
+        a: "Boolean",
+        b: "Undefined",
+        c: "Object",
+        d: "Integer",
+        correct: "c"
     },
 ]
 

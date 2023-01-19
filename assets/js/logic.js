@@ -9,11 +9,21 @@ let timeContent = document.querySelector(".timer");
 let timeClock = document.querySelector("#time");
 let quizEl = document.querySelector("#questions");
 let qTitle = document.querySelector("#question-title");
+let choiceBtn = document.querySelectorAll(".choice");
 let choiceA = document.querySelector("#a");
 let choiceB = document.querySelector("#b");
 let choiceC = document.querySelector("#c");
 let choiceD = document.querySelector("#d");
 let endScreen = document.querySelector("#end-screen");
+let initials = document.querySelector("#initials");
+let submit = document.querySelector("#submit");
+
+let scores = [];
+
+if (localStorage.getItem('scores')) {
+  scores = JSON.parse(localStorage.getItem('scores'))
+}
+
 
 let timer = 75;
 let score = 0;
@@ -31,8 +41,8 @@ function startQuiz() {
       timeClock.textContent = timer;
 
       if (timer <= 0) {
+        endQuiz();
         clearInterval(timeInterval);
-        showEndScreen();
         return;
       }
     }, 1000);
@@ -40,8 +50,6 @@ function startQuiz() {
 }
 
 startQuiz();
-
-
 
 // How to navigate to the first question at the same time the button is clicked?
 // It should transition to the question when the button is clicked and the timer starts to count down
@@ -77,9 +85,10 @@ function checkAnswer(answer) {
     if (runningQuestion < lastQuestionIndex) {
       runningQuestion++;
       renderQ();
+      // If the user answers the last question, show the ending screen
     } else if (runningQuestion === lastQuestionIndex) {
-      showEndScreen();
-      return;
+      endQuiz();
+      timer = 0;
     }
   }, 700);
 }
@@ -95,8 +104,8 @@ function answerCorrect() {
 
   let correctSfx = new Audio("assets/sfx/correct.wav");
   correctSfx.play();
-  correctSfx.volume = 0.2;
-  score += 50;
+  correctSfx.volume = 0.1;
+  score += 20;
 }
 
 // Make a function that makes the screen red, plays the 'incorrect' audio and increment score if the user chooses the incorrect answer for a question
@@ -109,29 +118,42 @@ function answerWrong() {
   }, 700);
   let incorrectSfx = new Audio("assets/sfx/incorrect.wav");
   incorrectSfx.play();
-  incorrectSfx.volume = 0.2;
+  incorrectSfx.volume = 0.1;
   // Minus points and deduct 10 from timer.
   timer -= 10;
-  score -= 25;
+  score -= 10;
 }
 
 // When the user has completed the quiz or the timer runs out. Display an alert/prompt to ask user to input in their name
 // The score is to be displayed on screen and saved onto an array for the high-scores.
 
-function showEndScreen() {
+function endQuiz() {
   quizEl.style.display = "none";
   endScreen.style.display = "block";
-  endScreen.classList.replace('hide', 'show');
+  endScreen.classList.replace("hide", "show");
+  document.getElementById("final-score").textContent = score;
 }
 
-// How to display whether the chosen answer was correct or incorrect?
+// Save the score and the user's initials to local storage upon submission
+// Display the data on the Highscores page
 
-//   * Questions contain buttons for each answer.
-//   *
-//   * When answer is clicked, the next question appears
-//   *
-//   * If the answer clicked was incorrect then subtract time from the clock
+function storeHiScores() {
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
 
-// * The quiz should end when all questions are answered or the timer reaches 0.
+// When the submit button is clicked, push the values of the user input, plus the score onto an array
 
-//   * When the game ends, it should display their score and give the user the ability to save their initials and their score
+submit.addEventListener("click", function (event) {
+  var buttonEl = event.target;
+  if (buttonEl.matches("button")) {
+    var parentEl = buttonEl.parentElement;
+    var indexOfEl = parentEl.dataset.index;
+    var playerData = score + ' - ' + initials.value.trim();
+    scores.push(playerData);
+    // This locates to the highscores.html webpage and displays its content when the function runs
+    document.location.replace('/highscores.html');
+    storeHiScores();
+  }
+});
+
+// Re-render the list
